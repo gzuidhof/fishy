@@ -66,16 +66,17 @@ class HugoContentReader
 	/**
 	 * Verify that read file is a TOML hugo content file.
 	 */
-	public function verifyIsHugoContent()
+	public function verifyIsHugoContent(): Bool
 	{
 		if (lines == null)
 		{
-			throw "No file read yet, use HugoContentReader.read first";
+			trace( "No file read yet, use HugoContentReader.read first");
+			return false;
 		}
 		
 		//First line must be "+++" if TOML is used.
 		if (!(lines[0] == "+++"))
-			notAHugoContentFile();
+			return false;
 		
 		var plusCount: Int = 0;
 		//Must contain another "+++" (the end of the frontmatter).
@@ -86,13 +87,9 @@ class HugoContentReader
 		}
 		
 		if (plusCount < 2)
-			notAHugoContentFile();
-		
-	}
-	
-	private function notAHugoContentFile()
-	{
-		throw "File is not a valid hugo content file";
+			return false;
+			
+		return true;
 	}
 	
 	public function parse()
@@ -130,7 +127,7 @@ class HugoContentReader
 		frontMatter = TomlParser.parseString(front, {});
 	}
 	
-	public function setTomlValue(key:String, value:String)
+	public function setTomlValue(key:String, value:Dynamic)
 	{
 		var from:String = Lambda.find(frontLines, function(s)
 		{
@@ -141,6 +138,18 @@ class HugoContentReader
 		parseTomlLines();
 	}
 	
+	public function getTomlvalue(key:String)
+	{
+		var string:String = Lambda.find(frontLines, function(s)
+		{
+			return s.trim().startsWith(key);
+		});
+		
+		return string.split("=")[1].trim();
+	}
+	
+	
+	
 	public function writeToFile(filePath: String)
 	{
 		if (lines == null || frontLines == null)
@@ -149,10 +158,12 @@ class HugoContentReader
 		var writer = File.write(filePath);
 
 		writer.writeString("+++\n");
+		
 		Lambda.foreach(frontLines, function(s) {
 			writer.writeString(s+"\n");
 			return true;
 		});
+		
 		writer.writeString("+++\n");
 		Lambda.foreach(contentLines, function(s) {
 			writer.writeString(s+"\n");
