@@ -138,7 +138,7 @@ class HugoContentReader
 		parseTomlLines();
 	}
 	
-	public function getTomlvalue(key:String)
+	public function getTomlValue(key:String)
 	{
 		var string:String = Lambda.find(frontLines, function(s)
 		{
@@ -178,5 +178,51 @@ class HugoContentReader
 		return "Frontlines: " + frontLines.toString() + "\n" 
 			+ "ContentLines: " + contentLines.toString();
 	}
+	
+	public static function getHighestPostNumber(folderPath: String): Null<Int>
+	{
+		return getLowestOrHighestPostNumber(folderPath, true);
+	}
+	
+	public static function getLowestPostNumber(folderPath: String): Null<Int>
+	{
+		return getLowestOrHighestPostNumber(folderPath, false);
+	}
+	
+	private static function getLowestOrHighestPostNumber(folderPath:String, highest: Bool):Null<Int> 
+	{
+		var files = FileSystem.readDirectory(folderPath);
+		var latest: Null<Int> = null;
+		
+		
+		for(f in files)
+		{
+			var filename = folderPath + "/" + f;
+			
+			if (FileSystem.isDirectory(filename) || !filename.endsWith(".md"))
+				continue;
+				
+			var fileNumber = Std.parseInt(filename.replace(folderPath+"/", "").replace(".md", ""));
+			
+			if (fileNumber == null)
+				continue;
+			else if (latest == null)
+			{
+				latest = fileNumber;
+			}
+			else if (highest && fileNumber > latest)
+			{
+				latest = fileNumber;
+			}
+			else if ((!highest) && fileNumber < latest)
+			{
+				latest = fileNumber;
+			}
+		}
+
+		return latest;
+		
+	}
+	
 	
 }

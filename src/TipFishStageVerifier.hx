@@ -75,7 +75,7 @@ class TipFishStageVerifier
 			}
 			
 			reader.parse();
-			if (reader.getTomlvalue("draft") != "true")
+			if (reader.getTomlValue("draft") != "true")
 			{
 				allSuccess = false;
 				trace("File should be a draft!");

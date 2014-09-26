@@ -3,7 +3,7 @@ package ;
 import haxetoml.TomlParser;
 
 /**
- * Command line tool.
+ * Command line tool for tip.fish.
  * @author Guido
  */
 
@@ -16,11 +16,13 @@ class Fishy
 	}
 	
 	public var options = {
-		stageFolderPath : "content/_stage"
+		stageFolderPath : "content/_stage",
+		postFolderpath: "content/post"
 	}
 	
 	
 	public function new() {
+		
 		var args = Sys.args();
 		if (args.length == 0)
 		{
@@ -30,6 +32,14 @@ class Fishy
 		{
 			verify();
 		}
+		else if (args[0] == "publish")
+		{
+			publish();
+		}
+		else if (args[0] == "tweet")
+		{
+			Sys.println("Not implemented yet!");
+		}
 		else {
 			printHelp();
 		}
@@ -38,7 +48,7 @@ class Fishy
 	
 	
 	private function debug()
-	{
+	{/*
 		var h = new HugoContentReader();
 		h.readFile("../test/testpost.md");
 		h.verifyIsHugoContent();
@@ -50,10 +60,11 @@ class Fishy
 		trace(h.toString());
 		
 		var dyn: Dynamic = h.frontMatter;
-		trace(h.getTomlvalue("draft"));
+		trace(h.getTomlValue("draft"));
 		trace (h.frontMatter.draft);
 		
-		h.writeToFile("testoutput.md");
+		h.writeToFile("testoutput.md");*/
+		//publish();
 	}
 	
 	
@@ -63,12 +74,24 @@ class Fishy
 		verifier.verify(true);
 	}
 	
+	private function publish()
+	{
+		trace("Starting publish");
+		var publisher = new TipFishPublisher(options.stageFolderPath, options.postFolderpath);
+		publisher.publishFromStage();
+	}
+	
+	
+	
 	private function printHelp()
 	{
 		Sys.println("Add an argument!");
-			Sys.println("Possible arguments: verify, help, publish, tweet");
-			Sys.println("publish and tweet not yet implemented");
+		Sys.println("Possible arguments: verify, help, publish, tweet");
+		Sys.println("tweet not yet implemented");
 	}
+	
+	
+	
 	
 	
 }
