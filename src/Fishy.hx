@@ -26,7 +26,6 @@ class Fishy
 		var args = Sys.args();
 		if (args.length == 0)
 		{
-			verify();
 			printHelp();
 		}
 		else if (args[0] == "verify")
