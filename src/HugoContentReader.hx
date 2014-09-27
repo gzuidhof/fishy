@@ -12,6 +12,7 @@ using StringTools;
  * only supports TOML.
  * @author Guido
  */
+@:keep
 class HugoContentReader
 {
 	

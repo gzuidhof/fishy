@@ -39,7 +39,7 @@ class TipFishStageVerifier
 		
 		for (filename in files)
 		{
-			Sys.print("Verifying " + filename);
+			Sys.print("Verifying " + stageFolderPath + "/" + filename);
 			
 			if (filename.startsWith(".") || FileSystem.isDirectory(stageFolderPath + "/" + filename))
 			{

@@ -26,6 +26,7 @@ class Fishy
 		var args = Sys.args();
 		if (args.length == 0)
 		{
+			verify();
 			printHelp();
 		}
 		else if (args[0] == "verify")
@@ -45,28 +46,6 @@ class Fishy
 		}
 		
 	};
-	
-	
-	private function debug()
-	{/*
-		var h = new HugoContentReader();
-		h.readFile("../test/testpost.md");
-		h.verifyIsHugoContent();
-		h.parse();
-		trace(h.toString());
-		
-		h.setTomlValue("draft", false);
-		
-		trace(h.toString());
-		
-		var dyn: Dynamic = h.frontMatter;
-		trace(h.getTomlValue("draft"));
-		trace (h.frontMatter.draft);
-		
-		h.writeToFile("testoutput.md");*/
-		//publish();
-	}
-	
 	
 	private function verify()
 	{
