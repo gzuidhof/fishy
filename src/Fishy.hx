@@ -26,6 +26,7 @@ class Fishy
 		var args = Sys.args();
 		if (args.length == 0)
 		{
+			Sys.println("Add an argument!");
 			printHelp();
 		}
 		else if (args[0] == "verify")
@@ -63,7 +64,6 @@ class Fishy
 	
 	private function printHelp()
 	{
-		Sys.println("Add an argument!");
 		Sys.println("Possible arguments: verify, help, publish, tweet");
 		Sys.println("tweet not yet implemented");
 	}

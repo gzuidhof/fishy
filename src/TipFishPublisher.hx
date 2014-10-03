@@ -1,5 +1,6 @@
 package ;
 import sys.FileSystem;
+using StringTools;
 
 /**
  * Moves a file from stage folder to publish folder.
@@ -35,7 +36,11 @@ class TipFishPublisher
 		hReader.setTomlValue("draft", false);
 		
 		var now = Date.now();
-		hReader.setTomlValue("date", ("\"" + now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate() + "\""));
+		
+		//"2014-09-22T02:51:01+00:00" (doesn't take into account timezone offset from UTC)
+		var dateString:String = ("\"" + now.toString().replace(" ", "T") + "+00:00\"");
+		
+		hReader.setTomlValue("date", dateString);
 		hReader.writeToFile(postFolder + "/" + postNrToPublish + ".md");
 		
 		Sys.println("Removing staged post");
