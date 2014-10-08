@@ -24,7 +24,7 @@
     <option noInlineOnDebug="False" />
     <option mainClass="Fishy" />
     <option enabledebug="False" />
-    <option additional="" />
+    <option additional="-java-lib lib/twitter4j-core-4.0.2.jar" />
   </build>
   <!-- haxelib libraries -->
   <haxelib>

@@ -39,7 +39,7 @@ class Fishy
 		}
 		else if (args[0] == "tweet")
 		{
-			Sys.println("Not implemented yet!");
+			tweet();
 		}
 		else {
 			printHelp();
@@ -58,6 +58,12 @@ class Fishy
 		trace("Starting publish");
 		var publisher = new TipFishPublisher(options.stageFolderPath, options.postFolderpath);
 		publisher.publishFromStage();
+	}
+	
+	private function tweet()
+	{
+		var twatter = new TipFishTweeter(options.postFolderpath);
+		twatter.tweetLastPost();
 	}
 	
 	

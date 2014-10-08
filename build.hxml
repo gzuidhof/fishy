@@ -1,0 +1,5 @@
+-cp src
+-main Fishy
+-java-lib lib/twitter4j-core-4.0.2.jar
+-java bin
+-v
